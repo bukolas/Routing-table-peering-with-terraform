@@ -26,3 +26,15 @@ Feel free to add own enhancements as you wish: Documenting your actions is stron
 At least 2 x 3 Firewall Rules
 
 3 x VMs, one for each network
+
+## Resources
+
+### Terraform
+- [Routing tables](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table)
+- [Networks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network)
+- [Firewall rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group)
+- [VMs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine)
+
+### External Documentation
+
+- [Peering docs](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview)
