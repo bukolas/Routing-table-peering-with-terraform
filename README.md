@@ -19,13 +19,13 @@ Feel free to add own enhancements as you wish: Documenting your actions is stron
 
 ## Inventory
 
-3 x Networks
+3 x Networks.
 
-3 x Routing tables, 1 for each network
+3 x Routing tables, 1 for each network.
 
-At least 2 x 3 Firewall Rules
+At least 2 x 3 Firewall Rules.
 
-3 x VMs, one for each network
+3 x VMs, one for each network.
 
 ## Resources
 
