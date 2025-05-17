@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "nsg" {
   name                = "nsg"
-  location            = azurerm_resource_group.rg_peering.location
-  resource_group_name = azurerm_resource_group.rg_peering.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "SSH"
@@ -16,67 +16,67 @@ resource "azurerm_network_security_group" "nsg" {
   }
 }
 
-resource "azurerm_public_ip" "pip-vm-vnet3" {
-    name                = "pip-vm-vnet3"
-    location            = azurerm_resource_group.rg_peering.location
-    resource_group_name = azurerm_resource_group.rg_peering.name
+resource "azurerm_public_ip" "pip-vm-vnetC" {
+    name                = "pip-vm-vnetC"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     sku = "Basic"
     allocation_method = "Dynamic"
 }
 
-resource "azurerm_public_ip" "pip-vm-vnet2" {
-    name                = "pip-vm-vnet2"
-    location            = azurerm_resource_group.rg_peering.location
-    resource_group_name = azurerm_resource_group.rg_peering.name
+resource "azurerm_public_ip" "pip-vm-vnetB" {
+    name                = "pip-vm-vnetB"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     sku = "Basic"
     allocation_method = "Dynamic"
 }
 
 # Create Network Interfaces 
-resource "azurerm_network_interface" "nic-vm-vnet3" {
-    name                = "nic-vm-vnet3"
-    location            = azurerm_resource_group.rg_peering.location
-    resource_group_name = azurerm_resource_group.rg_peering.name
+resource "azurerm_network_interface" "nic-vm-vnetC" {
+    name                = "nic-vm-vnetC"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
         name                          = "ipconfig1"
-        subnet_id                      = azurerm_subnet.vnet3-subnet3.id
+        subnet_id                      = azurerm_subnet.vnetC-subnet3.id
         private_ip_address_allocation = "Dynamic"
         public_ip_address_id          = azurerm_public_ip.pip-vm-vnet3.id
     }
 }
 
-resource "azurerm_network_interface" "nic-vm-vnet2" {
-    name                = "nic-vm-vnet2"
-    location            = azurerm_resource_group.rg_peering.location
-    resource_group_name = azurerm_resource_group.rg_peering.name
+resource "azurerm_network_interface" "nic-vm-vnetB" {
+    name                = "nic-vm-vnetB"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
         name                          = "ipconfig1"
-        subnet_id                      = azurerm_subnet.vnet2-subnet2.id
+        subnet_id                      = azurerm_subnet.vnetB-subnet2.id
         private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = azurerm_public_ip.pip-vm-vnet2.id
+        public_ip_address_id          = azurerm_public_ip.pip-vm-vnetB.id
     }
 }
 
-resource "azurerm_network_interface_security_group_association" "nsg-nic-vm-vnet2" {
-  network_interface_id      = azurerm_network_interface.nic-vm-vnet2.id
+resource "azurerm_network_interface_security_group_association" "nsg-nic-vm-vnetB" {
+  network_interface_id      = azurerm_network_interface.nic-vm-vnetB.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "nsg-nic-vm-vnet3" {
-  network_interface_id      = azurerm_network_interface.nic-vm-vnet3.id
+resource "azurerm_network_interface_security_group_association" "nsg-nic-vm-vnetC" {
+  network_interface_id      = azurerm_network_interface.nic-vm-vnetC.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-# Create Virtual Machine vnet3
-resource "azurerm_virtual_machine" "vm-vnet3" {
-    name                = "vm-vnet3"
-    location            = azurerm_resource_group.rg_peering.location
-    resource_group_name = azurerm_resource_group.rg_peering.name
+# Create Virtual Machine vnetC
+resource "azurerm_virtual_machine" "vm-vnetC" {
+    name                = "vm-vnetC"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     vm_size = "Standard_DS2_v2"
-    network_interface_ids = [azurerm_network_interface.nic-vm-vnet3.id]
+    network_interface_ids = [azurerm_network_interface.nic-vm-vnetC.id]
 
     os_profile {
-        computer_name  = "myvm-vnet3"
+        computer_name  = "myvm-vnetC"
         admin_username = "adminuser"
         admin_password = "Password1234!"
 
@@ -102,13 +102,13 @@ resource "azurerm_virtual_machine" "vm-vnet3" {
     }
 }
 
-# Create Virtual Machine vnet2
-resource "azurerm_virtual_machine" "vm-vnet2" {
-    name                = "vm-vnet2"
-    location            = azurerm_resource_group.rg_peering.location
-    resource_group_name = azurerm_resource_group.rg_peering.name
+# Create Virtual Machine vnetB
+resource "azurerm_virtual_machine" "vm-vnetB" {
+    name                = "vm-vnetB"
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     vm_size = "Standard_DS2_v2"
-    network_interface_ids = [azurerm_network_interface.nic-vm-vnet2.id]
+    network_interface_ids = [azurerm_network_interface.nic-vm-vnetB.id]
 
     os_profile {
         computer_name  = "myvm-vnet2"
