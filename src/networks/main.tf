@@ -96,3 +96,37 @@ resource "azurerm_virtual_network_gateway" "vnet_gateway" {
     subnet_id                     = azurerm_subnet.sbnA.id
     }
 }
+
+
+resource "azurerm_route_table" "vnet2-rt" {
+  name                = "vnet2-rt"
+  location            = azurerm_resource_group.rg_peering.location
+  resource_group_name = azurerm_resource_group.rg_peering.name
+}
+
+resource "azurerm_route" "vnet2-to-vnet3" {
+  name                = "vnet2-to-vnet3"
+  resource_group_name = azurerm_resource_group.rg_peering.name
+  route_table_name    = azurerm_route_table.vnet2-rt.name
+  address_prefix      = azurerm_virtual_network.vnet3.address_space[0]
+  next_hop_type       = "VirtualNetworkGateway"
+}
+
+resource "azurerm_route" "vnet3-to-vnet2" {
+  name                = "vnet3-to-vnet2"
+  resource_group_name = azurerm_resource_group.rg_peering.name
+  route_table_name    = azurerm_route_table.vnet2-rt.name
+  address_prefix      = azurerm_virtual_network.vnet2.address_space[0]
+  next_hop_type       = "VirtualNetworkGateway"
+}
+
+resource "azurerm_subnet_route_table_association" "vnet2-rt-association" {
+  subnet_id      = azurerm_subnet.vnet2-subnet2.id
+  route_table_id = azurerm_route_table.vnet2-rt.id
+}
+
+
+resource "azurerm_subnet_route_table_association" "vnet3-rt-association" {
+  subnet_id      = azurerm_subnet.vnet3-subnet3.id
+  route_table_id = azurerm_route_table.vnet2-rt.id
+}
