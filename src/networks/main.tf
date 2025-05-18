@@ -104,6 +104,12 @@ resource "azurerm_route_table" "vnetB-rt" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
+resource "azurerm_route_table" "vnetC-rt" {
+  name                = "vnetC-rt"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
 resource "azurerm_route" "vnetB-to-vnetC" {
   name                = "vnetB-to-vnetC"
   resource_group_name = azurerm_resource_group.rg.name
