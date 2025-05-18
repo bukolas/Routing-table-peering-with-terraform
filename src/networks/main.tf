@@ -121,12 +121,12 @@ resource "azurerm_route" "vnetC-to-vnetB" {
 }
 
 resource "azurerm_subnet_route_table_association" "vnetB-rt-association" {
-  subnet_id      = azurerm_subnet.vnetB-subnet2.id
+  subnet_id      = azurerm_subnet.sbnB.id
   route_table_id = azurerm_route_table.vnetB-rt.id
 }
 
 
 resource "azurerm_subnet_route_table_association" "vnet3-rt-association" {
-  subnet_id      = azurerm_subnet.vnetC-subnet3.id
+  subnet_id      = azurerm_subnet.sbnC.id
   route_table_id = azurerm_route_table.vnetC-rt.id
 }
