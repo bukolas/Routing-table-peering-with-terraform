@@ -39,9 +39,9 @@ resource "azurerm_network_interface" "nic-vm-vnetC" {
     resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
         name                          = "ipconfig1"
-        subnet_id                      = azurerm_subnet.vnetC-subnet3.id
+        subnet_id                      = azurerm_subnet.sbnC.id
         private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = azurerm_public_ip.pip-vm-vnet3.id
+        public_ip_address_id          = azurerm_public_ip.pip-vm-vnetC.id
     }
 }
 
@@ -51,7 +51,7 @@ resource "azurerm_network_interface" "nic-vm-vnetB" {
     resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
         name                          = "ipconfig1"
-        subnet_id                      = azurerm_subnet.vnetB-subnet2.id
+        subnet_id                      = azurerm_subnet.sbnB.id
         private_ip_address_allocation = "Dynamic"
         public_ip_address_id          = azurerm_public_ip.pip-vm-vnetB.id
     }
